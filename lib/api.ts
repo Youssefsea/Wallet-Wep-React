@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://feb3430a655849d5.preview.oblien.com';
 
 const api = axios.create({ baseURL: BASE_URL });
 
