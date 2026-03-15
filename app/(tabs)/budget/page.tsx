@@ -136,7 +136,7 @@ export default function BudgetPage() {
 
   const totalBudget = budgets.reduce((s, b) => s + parseFloat(b.monthly_limit), 0);
   const totalSpent = budgets.reduce((s, b) => s + parseFloat(b.spent_amount || '0'), 0);
-  const remaining = budgets.reduce((s, b) => s + parseFloat(b.remaining || '0'), 0);
+  const remaining = budgets.reduce((s, b) => s + parseFloat(b.monthly_limit) + parseFloat(b.spent_amount || '0'), 0);
   const usedPct = totalBudget > 0 ? Math.round(((totalSpent * -1) / totalBudget) * 100) : 0;
 
   if (loading) return <div className="flex min-h-screen items-center justify-center"><Spinner /></div>;
@@ -155,7 +155,7 @@ export default function BudgetPage() {
       </div>
 
       <p className="mb-5 font-cairo text-sm text-text-secondary">
-        {now.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}
+        {now.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric',day: 'numeric' })}
       </p>
 
       {/* Summary + AI Advice — 2-col on desktop */}
