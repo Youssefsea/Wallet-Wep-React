@@ -1,26 +1,111 @@
+/* WealthWise AI - Global styles migrated from React Native theme */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Primary Green Palette */
+  --color-primary: #1C5F20;
+  --color-primary-dark: #144317;
+  --color-primary-darker: #0D2B0F;
+  --color-primary-light: #2E7D32;
+  --color-primary-surface: #E8F5E9;
+
+  /* Backgrounds */
+  --color-bg-light: #F6F8F6;
+  --color-bg-dark: #131F14;
+  --color-bg-card: #FFFFFF;
+
+  /* Gold Accent */
+  --color-gold: #D4AF37;
+  --color-gold-light: #F5E6B8;
+
+  /* Text */
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #6B7280;
+  --color-text-light: #9CA3AF;
+  --color-text-dark: #111827;
+
+  /* Status */
+  --color-error: #DC2626;
+  --color-error-light: #FEE2E2;
+  --color-error-border: #F87171;
+  --color-success: #16A34A;
+  --color-success-light: #DCFCE7;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FFFBEB;
+
+  /* Borders */
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
+  --color-divider: #EEEEEE;
+
+  /* Budget Colors */
+  --color-budget-green: #22C55E;
+  --color-budget-yellow: #F59E0B;
+  --color-budget-red: #EF4444;
+  --color-category-bg: #F0FFF4;
+
+  /* Font families */
+  --font-cairo: var(--font-cairo-var), 'Cairo', sans-serif;
+  --font-manrope: var(--font-manrope-var), 'Manrope', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Spinner animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Progress bar animation */
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-border-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-primary);
+  font-family: var(--font-cairo);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+/* Input focuses */
+input:focus, textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+/* Modal slide-up animation */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Number inputs - hide spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
