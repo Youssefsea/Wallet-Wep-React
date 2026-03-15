@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WealthWise AI — محفظتك الذكية
 
-## Getting Started
+تطبيق ويب متكامل لإدارة المحافظ المالية الشخصية، مبني بـ **Next.js** وموجّه للمستخدم العربي. يستخدم الذكاء الاصطناعي لتصنيف المصروفات تلقائياً وتقديم نصائح مالية مخصصة.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## المميزات الرئيسية
+
+- **نظام محافظ مزدوج** — محفظة رئيسية مرتبطة بالرصيد الحقيقي + محافظ محلية إضافية قابلة للإنشاء
+- **مصروف ذكي بالـ AI** — أدخل مصروفاتك بالعربية الطبيعية (مثلاً: "300 جنيه فراخ و 150 جنيه عصير") وسيتولى الـ AI تصنيفها وتسجيلها تلقائياً، مع دعم الإدخال الصوتي
+- **ميزانية شهرية** — تتبع الإنفاق لكل فئة مع شريط تقدم ملون (أخضر / أصفر / أحمر) وعرض تفصيلي لكل معاملة
+- **نصائح مالية بالـ AI** — نصائح إنفاق مخصصة على حسب مدينتك وبياناتك الشهرية
+- **واجهة عربية RTL** — تصميم بالكامل من اليمين لليسار، بخط Cairo
+- **تحميل لا نهائي** للمعاملات مع فلترة وبحث
+- **سجل إدخال فريد (Idempotency)** — لكل عملية مالية مفتاح UUID يمنع التكرار عند إعادة الإرسال
+
+---
+
+## التقنيات المستخدمة
+
+| التقنية | الغرض |
+|---|---|
+| [Next.js 16](https://nextjs.org) (App Router) | إطار العمل الرئيسي |
+| React 19 | واجهة المستخدم |
+| TypeScript | سلامة الأنواع |
+| Tailwind CSS v4 | التنسيق والتصميم |
+| Axios | التواصل مع الـ API |
+| React Context API | إدارة حالة المصادقة |
+| Web Speech API | الإدخال الصوتي بالعربية |
+| IntersectionObserver | التحميل اللانهائي |
+| UUID v4 | مفاتيح idempotency للعمليات المالية |
+
+---
+
+## هيكل الصفحات
+
+```
+/                       → Splash Screen (فحص حالة تسجيل الدخول)
+/onboarding             → شاشات الترحيب (عرض لأول مرة فقط)
+/login                  → تسجيل الدخول
+/signup                 → إنشاء حساب
+
+/dashboard              → الرئيسية (الرصيد + آخر المعاملات)
+/wallets                → المحافظ (رئيسية + محلية)
+/smart-expense          → المصروف الذكي (AI)
+/budget                 → الميزانية الشهرية
+/profile                → الملف الشخصي
+
+/deposit                → إيداع في المحفظة الرئيسية
+/withdraw               → سحب من المحفظة الرئيسية
+/transfer               → تحويل بين المحافظ
+/local-deposit          → إيداع في محفظة محلية
+/manual-transaction     → إضافة معاملة يدوية
+
+/transactions           → سجل كل المعاملات (مع فلتر + بحث)
+/transactions/[id]      → تفاصيل معاملة
+/local-transactions     → سجل معاملات المحافظ المحلية
+/local-transactions/[id]→ تفاصيل معاملة محلية
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## متغيرات البيئة
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+أنشئ ملف `.env.local` في جذر المشروع:
 
-## Learn More
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3333
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## تشغيل المشروع
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# تثبيت الحزم
+npm install
 
-## Deploy on Vercel
+# تشغيل السيرفر في وضع التطوير
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+افتح [http://localhost:3000](http://localhost:3000) في المتصفح.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# بناء للإنتاج
+npm run build
+npm start
+```
+
+---
+
+## هيكل المجلدات
+
+```
+my-app/
+├── app/                  # صفحات التطبيق (Next.js App Router)
+│   ├── (tabs)/           # الصفحات ذات الـ navigation bar
+│   └── ...               # باقي الصفحات
+├── components/           # مكونات مشتركة (Modal, Spinner, ...)
+├── context/
+│   └── AuthContext.tsx   # إدارة المصادقة وبيانات المستخدم
+├── lib/
+│   └── api.ts            # كل calls الـ API مركّزة هنا
+└── public/               # الأصول الثابتة
+```
+
+---
+
+## ملاحظات
+
+- التطبيق محوّل من React Native — بعض الأجزاء تستخدم `localStorage` بدلاً من `expo-secure-store`
+- الواجهة موجّهة للمستخدم المصري (اللهجة + اتجاه RTL)
+- الـ API الخلفي مبني على Node.js ويعمل افتراضياً على المنفذ `3333`
