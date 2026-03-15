@@ -17,8 +17,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const signup = (name: string, email: string, password: string) =>
-  api.post('/auth/signup', { name, email, password });
+export const sendOTP = (email: string, phone: string) =>
+  api.post('/auth/send-otp', { email, phone });
+
+export const signup = (name: string, email: string, password: string, otp: string) =>
+  api.post('/auth/signup', { name, email, password, otp });
 
 export const login = (email: string, password: string) =>
   api.post('/auth/login', { email, password });

@@ -30,7 +30,7 @@ interface AuthState {
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string, password: string) => Promise<void>;
+  signup: (name: string, email: string, password: string, otp: string) => Promise<void>;
   logout: () => void;
   refreshProfile: () => Promise<void>;
 }
@@ -76,8 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signup = useCallback(
-    async (name: string, email: string, password: string) => {
-      await apiSignup(name, email, password);
+    async (name: string, email: string, password: string, otp: string) => {
+      await apiSignup(name, email, password, otp);
     },
     [],
   );
