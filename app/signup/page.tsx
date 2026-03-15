@@ -12,7 +12,7 @@ export default function SignUpPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +24,6 @@ export default function SignUpPage() {
   const validate = (): string | null => {
     if (!name.trim()) return 'يرجى إدخال الاسم';
     if (!email.trim()) return 'يرجى إدخال البريد الإلكتروني';
-    if (!phone.trim()) return 'يرجى إدخال رقم الهاتف';
     if (password.length < 8) return 'كلمة المرور لازم تكون 8 أحرف على الأقل';
     if (password !== confirmPassword) return 'كلمة المرور مش متطابقة';
     return null;
@@ -35,7 +34,7 @@ export default function SignUpPage() {
     if (msg) { setError(msg); return; }
     setError(''); setLoading(true);
     try {
-      await sendOTP(email.trim(), phone.trim());
+      await sendOTP(email.trim());
       setStep(2);
     } catch (err: any) {
       setError(err?.response?.data?.message || 'فشل إرسال الرمز، حاول مرة أخرى');
@@ -120,18 +119,7 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <label className="mb-2 block text-right font-cairo text-sm font-medium text-text-primary">رقم الهاتف</label>
-              <div className="mb-4 flex h-[52px] items-center rounded-xl border border-border bg-bg-light px-3">
-                <span className="ml-2 text-lg">📱</span>
-                <input
-                  type="tel"
-                  dir="ltr"
-                  className="flex-1 bg-transparent font-cairo text-sm text-text-primary placeholder:text-text-light"
-                  placeholder="+201234567890"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                />
-              </div>
+            
 
               <label className="mb-2 block text-right font-cairo text-sm font-medium text-text-primary">كلمة المرور</label>
               <div className="mb-4 flex h-[52px] items-center rounded-xl border border-border bg-bg-light px-3">
