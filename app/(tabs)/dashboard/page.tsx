@@ -112,6 +112,7 @@ export default function DashboardPage() {
               { icon: '💰', label: 'إيداع', href: '/deposit' },
               { icon: '💸', label: 'سحب', href: '/withdraw' },
               { icon: '📤', label: 'تحويل', href: '/transfer' },
+              { icon: '📥', label: 'استلام', href: '/receive' },
             ].map(a => (
               <button key={a.href} onClick={() => router.push(a.href)}
                 className="flex flex-col items-center rounded-xl bg-white/10 px-4 py-3 transition-colors hover:bg-white/20 sm:px-6">

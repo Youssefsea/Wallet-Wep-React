@@ -1,5 +1,3 @@
-/* API service layer - migrated from React Native api.ts */
-/* Replaces expo-secure-store with localStorage for token storage */
 
 import axios from 'axios';
 

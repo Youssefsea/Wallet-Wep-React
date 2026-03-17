@@ -6,6 +6,9 @@ import { useAuth } from '@/context/AuthContext';
 import { transfer, getCategories } from '@/lib/api';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '@/components/Spinner';
+import dynamic from 'next/dynamic';
+
+const QrScanner = dynamic(() => import('@/components/QrScanner'), { ssr: false });
 
 const QUICK_AMOUNTS = [100, 500, 1000, 5000];
 
@@ -21,6 +24,7 @@ export default function TransferPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCatId, setSelectedCatId] = useState<number | null>(null);
+  const [showScanner, setShowScanner] = useState(false);
 
   useEffect(() => {
     getCategories()
@@ -61,7 +65,37 @@ export default function TransferPage() {
         <div className="mb-4 flex h-[52px] items-center rounded-xl border border-border bg-bg-light px-3">
           <span className="ml-2 text-lg">📧</span>
           <input type="email" dir="ltr" className="flex-1 bg-transparent font-cairo text-sm text-text-primary placeholder:text-text-light" placeholder="example@mail.com" value={receiverEmail} onChange={e => setReceiverEmail(e.target.value)} />
+          <button
+            type="button"
+            onClick={() => setShowScanner(prev => !prev)}
+            className="mr-2 flex h-9 w-9 items-center justify-center rounded-lg bg-primary-surface text-primary transition-colors hover:bg-primary hover:text-white"
+            title="مسح كود QR"
+          >
+            <span className="text-lg">📷</span>
+          </button>
         </div>
+
+        {showScanner && (
+          <div className="mb-4">
+            <QrScanner
+              onResult={(text) => {
+                const trimmed = text.trim();
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+                  setReceiverEmail(trimmed);
+                  setShowScanner(false);
+                } else {
+                  setError('الكود لا يحتوي على إيميل صالح');
+                  setShowScanner(false);
+                }
+              }}
+              onError={(errMsg) => {
+                setError(errMsg);
+                setShowScanner(false);
+              }}
+              onClose={() => setShowScanner(false)}
+            />
+          </div>
+        )}
 
         <label className="mb-2 block text-right font-cairo text-sm font-medium text-text-primary">المبلغ</label>
         <input type="number" inputMode="decimal"
