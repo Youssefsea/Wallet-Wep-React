@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://feb3430a655849d5.preview.oblien.com';
+const BASE_URL = https://wallet-backend-six-beta.vercel.app';
 
 const api = axios.create({ baseURL: BASE_URL });
 
