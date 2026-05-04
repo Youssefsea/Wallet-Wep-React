@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const BASE_URL = https://wallet-backend-six-beta.vercel.app';
+const BASE_URL = 'https://wallet-backend-six-beta.vercel.app';
 
 const api = axios.create({ baseURL: BASE_URL });
 
