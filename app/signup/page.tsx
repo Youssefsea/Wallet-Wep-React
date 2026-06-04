@@ -262,6 +262,8 @@ export default function SignUpPage() {
                 <p className="font-cairo text-sm text-text-secondary">
                   تحقق من بريدك وأدخل الرمز المكون من 6 أرقام
                 </p>
+                <p className="font-cairo text-sm text-text-secondary">إذا ما وصلكش، تأكد من صندوق الرسائل الغير مرغوب فيها أو جرب بريد إلكتروني مختلف</p>
+                <p className="font-cairo text-sm text-text-secondary">الرمز بينتهي خلال 10 دقايق</p>
               </div>
 
               <div dir="ltr" className="mb-6 flex justify-center gap-2">
