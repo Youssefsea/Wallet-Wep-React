@@ -32,7 +32,8 @@ export default function TransferPage() {
       .catch(() => {});
   }, []);
 
-  const handleTransfer = async () => {
+  const handleTransfer = async () => 
+    {
     if (!receiverEmail.trim()) { setError('يرجى إدخال إيميل المستلم'); return; }
     const num = parseFloat(amount);
     if (!num || num <= 0) { setError('يرجى إدخال مبلغ صالح'); return; }
